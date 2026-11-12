@@ -1,3 +1,5 @@
+> Local experimental 1.45.3 port: see [build instructions, changes and runtime limits](docs/port-1.45.3.md). The PC dependency stack and live crossplay still need validation.
+
 # BeatTogether
 A multiplayer private server for the modding community. Supports crossplay between PC and Quest. **This is the PC Plugin.**
 

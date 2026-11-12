@@ -1,15 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <DisableCopyToGame Condition="'$(InstallToGame)' != 'true'">true</DisableCopyToGame>
     <OutputType>Library</OutputType>
+    <BSMTProjectType>BSIPA</BSMTProjectType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>BeatTogether</AssemblyName>
-    <AssemblyVersion>2.2.1</AssemblyVersion>
-    <TargetFramework>net472</TargetFramework>
+    <AssemblyVersion>2.2.6</AssemblyVersion>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <LocalRefsDir Condition="Exists('..\Refs')">..\Refs</LocalRefsDir>
-    <BeatSaberDir>$(LocalRefsDir)</BeatSaberDir>
+    <BeatSaberDir Condition="'$(BeatSaberDir)' == ''">$(LocalRefsDir)</BeatSaberDir>
+    <ModRefsDir Condition="'$(ModRefsDir)' == ''">$(BeatSaberDir)</ModRefsDir>
+    <MultiplayerCorePath Condition="'$(MultiplayerCorePath)' == ''">$(ModRefsDir)\Plugins\MultiplayerCore.dll</MultiplayerCorePath>
+    <DisableCopyToPlugins Condition="'$(DisableCopyToPlugins)' == ''">true</DisableCopyToPlugins>
     <!--<PathMap>$(AppOutputBase)=X:\$(AssemblyName)\</PathMap>-->
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,16 +45,19 @@
     <None Remove="UI\ServerSelectionController.bsml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Net.Http"><HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\System.Net.Http.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="Networking" Publicize="true"><HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Networking.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="BeatSaber.Multiplayer.Core" Publicize="true"><HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.Multiplayer.Core.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="0Harmony">
       <HintPath>$(BeatSaberDir)\Libs\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BeatSaber.ViewSystem" Publicize="true">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Beat Saber_Data\Managed\BeatSaber.ViewSystem.dll</HintPath>
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.ViewSystem.dll</HintPath>
     </Reference>
     <Reference Include="BSML, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
-      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
+      <HintPath>$(ModRefsDir)\Plugins\BSML.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Main">
@@ -59,17 +67,14 @@
       <Publicize>True</Publicize>
     </Reference>
     <Reference Include="MultiplayerCore">
-      <HintPath>$(BeatSaberDir)\Plugins\MultiplayerCore.dll</HintPath>
+      <HintPath>$(MultiplayerCorePath)</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SiraUtil, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
-      <HintPath>$(BeatSaberDir)\Plugins\SiraUtil.dll</HintPath>
+      <HintPath>$(ModRefsDir)\Plugins\SiraUtil.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="DataModels">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\DataModels.dll</HintPath>
       <Private>False</Private>

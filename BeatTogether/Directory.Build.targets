@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file contains the build tasks and targets for verifying the manifest, zipping Release builds,
      and copying the plugin to to your Beat Saber folder. Only edit this if you know what you are doing. -->
 <Project>
@@ -76,7 +76,7 @@
     <ZipDir SourceDirectory="$(ArtifactDestination)" DestinationFile="$(DestinationDirectory)$(ArtifactName).zip" />
   </Target>
   <!--Copies the assembly and pdb to the Beat Saber folder.-->
-  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(DisableCopyToPlugins)' != 'True' AND '$(ContinuousIntegrationBuild)' != 'True'">
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(InstallToGame)' == 'true' AND '$(DisableCopyToPlugins)' != 'True' AND '$(ContinuousIntegrationBuild)' != 'True'">
     <PropertyGroup>
       <PluginDir>$(BeatSaberDir)\Plugins</PluginDir>
       <CanCopyToPlugins>True</CanCopyToPlugins>

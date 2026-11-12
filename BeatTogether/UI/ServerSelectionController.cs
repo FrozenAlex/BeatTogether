@@ -25,7 +25,7 @@ using MultiplayerCore.Repositories;
 
 namespace BeatTogether.UI
 {
-    internal class ServerSelectionController : IInitializable, IAffinity, INotifyPropertyChanged
+    internal class ServerSelectionController : IInitializable, IDisposable, IAffinity, INotifyPropertyChanged
     {
         public const string ResourcePath = "BeatTogether.UI.ServerSelectionController.bsml";
 
@@ -80,6 +80,12 @@ namespace BeatTogether.UI
             (_serverList.gameObject.transform.GetChild(1) as RectTransform)!.sizeDelta = new Vector2(60, 0);
             _screen.GetComponent<CurvedCanvasSettings>().SetRadius(140);
             _screen.gameObject.SetActive(false);
+        }
+
+        public void Dispose()
+        {
+            _mpStatusRepository.statusUpdatedForUrlEvent -= HandleMpStatusUpdateForUrl;
+            if (_screen != null) UnityEngine.Object.Destroy(_screen.gameObject);
         }
 
         #region Server selection
